@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image} from 'react-native';
+import { GuildProps } from '../Guild';
 
 
 import { style } from './style'
@@ -8,11 +9,11 @@ import { style } from './style'
 
 
 type Props =  {
-
+   url: string | null
 }
 
-export function GuildIcon({}: Props){
-    const uri = 'https://pbs.twimg.com/profile_images/980640647165116416/9m4JVaVA_400x400.jpg';
+export function GuildIcon({url}: Props){
+    const uri = url? url : 'image.jpg'
     return( 
         <Image
         source={{uri}}
