@@ -50,10 +50,10 @@ export function Home() {
         categoryId === category ? setCategory('') : setCategory(categoryId);
     }
 
-    function handleAppointmentDetails(){
+    function handleAppointmentDetails() {
         navigation.navigate('AppointmentsDetails');
     }
-    function handleAppointmentCreate(){
+    function handleAppointmentCreate() {
         navigation.navigate('AppointmentsCreate');
     }
 
@@ -70,22 +70,23 @@ export function Home() {
                     setCategory={handleCategorySelect} />
             </View>
 
-            <View style={style.content}>
-                <ListHeader
-                    title='Partidas agendadas'
-                    subtitle='Total 6' />
-            </View>
+
+            <ListHeader
+                title='Partidas agendadas'
+                subtitle='Total 6' />
+
 
             <FlatList
                 data={appointments}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                    <Appointment 
-                    data={item} 
-                    onPress={handleAppointmentDetails}/>
+                    <Appointment
+                        data={item}
+                        onPress={handleAppointmentDetails} />
 
                 )}
                 ItemSeparatorComponent={() => <ListDivider />}
+                contentContainerStyle={{paddingBottom: 69}}
                 style={style.matches}
                 showsVerticalScrollIndicator={false} />
 

@@ -8,6 +8,8 @@ import { StatusBar } from 'react-native';
 import { Background } from './src/components/Backgorund'
 import { Routes } from './src/routes';
 
+import {AuthProvider} from './src/hooks/auth'
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -27,7 +29,9 @@ export default function App() {
         barStyle='light-content'
         backgroundColor='transparent'
         translucent />
+        <AuthProvider>
       <Routes />
+      </AuthProvider>
     </Background>
   );
 }

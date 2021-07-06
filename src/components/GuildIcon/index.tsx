@@ -1,7 +1,5 @@
 import React from 'react';
 import {Image} from 'react-native';
-import { GuildProps } from '../Guild';
-
 
 import { style } from './style'
 

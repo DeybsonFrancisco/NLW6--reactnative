@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     View,
     Image,
     Text,
+    Alert,
+    LogBox,
+    ActivityIndicator 
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
+
+LogBox.ignoreLogs(['You are not currently signed in to Expo on your development machine.'])
+
+import { useAuth } from '../../hooks/auth';
 
 import { ButtonIcon } from '../../components/ButtonIcon';
-
 import { Background } from '../../components/Backgorund';
-
 import IllustrationImg from '../../assets/illustration.png';
 import { style } from './styles'
+import { theme } from '../../global/styles/theme';
+
 
 export function SignIn() {
-    const navigation = useNavigation();
 
-    function handleSignIn() {
-        navigation.navigate('Home');
+    const { loading, signIn } = useAuth()
+
+    async function handleSignIn() {
+        try {
+            await signIn()
+        } catch (error) {
+            Alert.alert(error)
+        }
     }
 
     return (
@@ -38,11 +49,13 @@ export function SignIn() {
                         Crie grupos para jogar seus games{`\n`}
                         favoritos com os amigos
                     </Text>
-                    <ButtonIcon
+                    {
+                        loading ? <ActivityIndicator color={theme.colors.primary} /> :
+                        <ButtonIcon
                         title="Entrar com o Discord"
                         activeOpacity={0.7}
                         onPress={handleSignIn} />
-
+                    }
                 </View>
 
             </View>
