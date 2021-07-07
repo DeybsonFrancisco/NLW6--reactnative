@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native'
-import { ceil } from 'react-native-reanimated'
 import { theme } from '../../global/styles/theme'
 
 export const style = StyleSheet.create({

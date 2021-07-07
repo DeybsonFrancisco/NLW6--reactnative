@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { Profile } from '../../components/Profile';
@@ -29,8 +29,8 @@ export function Home() {
         categoryId === category ? setCategory('') : setCategory(categoryId);
     }
 
-    function handleAppointmentDetails() {
-        navigation.navigate('AppointmentsDetails');
+    function handleAppointmentDetails(guildSelected: AppointmentProps) {
+        navigation.navigate('AppointmentsDetails', {guildSelected});
     }
     function handleAppointmentCreate() {
         navigation.navigate('AppointmentsCreate');
@@ -69,7 +69,7 @@ export function Home() {
                 <>
                     <ListHeader
                         title='Partidas agendadas'
-                        subtitle='Total 6' />
+                        subtitle={`${appointments.length}`} />
 
 
                     <FlatList
@@ -78,7 +78,7 @@ export function Home() {
                         renderItem={({ item }) => (
                             <Appointment
                                 data={item}
-                                onPress={handleAppointmentDetails} />
+                                onPress={() => handleAppointmentDetails(item)} />
 
                         )}
                         ItemSeparatorComponent={() => <ListDivider />}

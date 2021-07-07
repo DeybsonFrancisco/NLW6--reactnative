@@ -28,11 +28,12 @@ import { COLLECTINO_APPOINTMENTS } from '../../configs/database';
 import { useNavigation } from '@react-navigation/native';
 
 export function AppointmentsCreate() {
+
+
     const [category, setCategory] = useState('');
     const [openGuildsModal, setOpenGuildsModal] = useState(false);
     const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
 
-    const [teste, setTeste] = useState(1)
     const [day, setDay] = useState('')
     const [month, setMonth] = useState('');
     const [hour, setHour] = useState('');
@@ -59,17 +60,13 @@ export function AppointmentsCreate() {
     }
 
     async function handleSave() {
-        console.log('Valor do teste é: ', teste)
-        setTeste(12)
-        console.log(teste)
         const appointment = {
             id: uuid.v4(),
             guild,
             category,
-            date: `${day}/${month} as ${hour}: ${minute}h`,
+            date: `${day}/${month} as ${hour}:${minute}h`,
             description
         }
-
         const storage = await AsyncStorage.getItem(COLLECTINO_APPOINTMENTS)
         const appoitments = storage ? JSON.parse(storage) : []
 
@@ -158,7 +155,7 @@ export function AppointmentsCreate() {
                             maxLength={100}
                             numberOfLines={5}
                             autoCorrect={false}
-                            onChange={text => setDescription} />
+                            onChangeText={setDescription} />
 
                         <View style={style.footer}>
                             <Button title="Agendar" onPress={handleSave}/>
@@ -171,5 +168,4 @@ export function AppointmentsCreate() {
             </Background>
         </KeyboardAvoidingView>
     )
-
 }
