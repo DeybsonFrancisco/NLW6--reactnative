@@ -5,7 +5,6 @@ import { SvgProps } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { style } from './style'
-import { categories } from '../../utils/categories';
 import { theme } from '../../global/styles/theme';
 
 

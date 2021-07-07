@@ -8,7 +8,7 @@ import { StatusBar } from 'react-native';
 import { Background } from './src/components/Backgorund'
 import { Routes } from './src/routes';
 
-import {AuthProvider} from './src/hooks/auth'
+import { AuthProvider } from './src/hooks/auth'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -29,8 +29,8 @@ export default function App() {
         barStyle='light-content'
         backgroundColor='transparent'
         translucent />
-        <AuthProvider>
-      <Routes />
+      <AuthProvider>
+        <Routes />
       </AuthProvider>
     </Background>
   );

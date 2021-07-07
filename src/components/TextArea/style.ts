@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { theme } from '../../global/styles/theme'
 
 export const style = StyleSheet.create({
-    container:{
+    container: {
         width: '100%',
         height: 95,
         backgroundColor: theme.colors.secondary40,
@@ -10,7 +10,11 @@ export const style = StyleSheet.create({
         borderRadius: 8,
         fontFamily: theme.fonts.text400,
         fontSize: 13,
-        marginLeft: 4,
-        textAlign: 'center',
-    }
+        marginRight: 4,
+        borderWidth: 1,
+        borderColor: theme.colors.secondary50,
+        paddingHorizontal: 16,
+        paddingTop: 16,
+        textAlignVertical: 'top'
+      }
 })

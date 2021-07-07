@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler'
 import { Feather } from '@expo/vector-icons'
+import uuid from 'react-native-uuid'
 
 import { Background } from '../../components/Backgorund';
 import { Header } from '../../components/Header';
@@ -22,11 +23,23 @@ import { Guilds } from '../Guilds';
 import { style } from './style';
 import { theme } from '../../global/styles/theme';
 import { GuildProps } from '../../components/Guild';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { COLLECTINO_APPOINTMENTS } from '../../configs/database';
+import { useNavigation } from '@react-navigation/native';
 
 export function AppointmentsCreate() {
     const [category, setCategory] = useState('');
     const [openGuildsModal, setOpenGuildsModal] = useState(false);
-    const [guild, setGuild] = useState<GuildProps>({} as GuildProps)
+    const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
+
+    const [teste, setTeste] = useState(1)
+    const [day, setDay] = useState('')
+    const [month, setMonth] = useState('');
+    const [hour, setHour] = useState('');
+    const [minute, setMinute] = useState('');
+    const [description, setDescription] = useState('');
+
+    const navigation = useNavigation()
 
     function handleOpenGuilds() {
         setOpenGuildsModal(true)
@@ -41,9 +54,30 @@ export function AppointmentsCreate() {
         setOpenGuildsModal(false)
     }
 
-    function handleCategorySelect(categoryId: string){
+    function handleCategorySelect(categoryId: string) {
         setCategory(categoryId)
     }
+
+    async function handleSave() {
+        console.log('Valor do teste é: ', teste)
+        setTeste(12)
+        console.log(teste)
+        const appointment = {
+            id: uuid.v4(),
+            guild,
+            category,
+            date: `${day}/${month} as ${hour}: ${minute}h`,
+            description
+        }
+
+        const storage = await AsyncStorage.getItem(COLLECTINO_APPOINTMENTS)
+        const appoitments = storage ? JSON.parse(storage) : []
+
+        await AsyncStorage.setItem(COLLECTINO_APPOINTMENTS, JSON.stringify([...appoitments, appointment]))
+
+        navigation.navigate('Home')
+    }
+
 
     return (
         <KeyboardAvoidingView
@@ -75,7 +109,7 @@ export function AppointmentsCreate() {
 
                             {
                                 guild.icon ?
-                                    <GuildIcon url={guild.icon} /> :
+                                    <GuildIcon guildId={guild.id} iconId={guild.icon} /> :
                                     <View style={style.image} />
                             }
 
@@ -98,9 +132,9 @@ export function AppointmentsCreate() {
                                 <Text style={[style.label, { marginBottom: 12 }]}>Dia e mês</Text>
 
                                 <View style={style.column}>
-                                    <SmallInput maxLength={2} />
+                                    <SmallInput maxLength={2} onChangeText={setDay} />
                                     <Text style={style.divider}> / </Text>
-                                    <SmallInput maxLength={2} />
+                                    <SmallInput maxLength={2} onChangeText={setMonth} />
                                 </View>
                             </View>
 
@@ -108,9 +142,9 @@ export function AppointmentsCreate() {
                                 <Text style={[style.label, { marginBottom: 12 }]}>Hora e minuto</Text>
 
                                 <View style={style.column}>
-                                    <SmallInput maxLength={2} />
+                                    <SmallInput maxLength={2} onChangeText={setHour} />
                                     <Text style={style.divider}> : </Text>
-                                    <SmallInput maxLength={2} />
+                                    <SmallInput maxLength={2} onChangeText={setMinute} />
                                 </View>
                             </View>
                         </View>
@@ -123,10 +157,11 @@ export function AppointmentsCreate() {
                             multiline
                             maxLength={100}
                             numberOfLines={5}
-                            autoCorrect={false} />
+                            autoCorrect={false}
+                            onChange={text => setDescription} />
 
                         <View style={style.footer}>
-                            <Button title="Agendar" />
+                            <Button title="Agendar" onPress={handleSave}/>
                         </View>
                     </View>
                 </ScrollView>
